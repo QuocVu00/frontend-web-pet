@@ -1,0 +1,589 @@
+/* ============================================================
+   LUMIÈRE — Global Design System
+   Font Imports, CSS Variables, Utility Classes, Base Styles
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+/* ── CSS Custom Properties ──────────────────────────────── */
+:root {
+  /* Brand palette */
+  --color-orange:    #FF6B9D;
+  --color-yellow:    #FFB6C1;
+  --color-blue:      #E0BBE4;
+  --color-white:     #FFFFFF;
+  --color-charcoal:  #332233;
+  --color-gray:      #887788;
+  --color-light:     #FFF5F8;
+
+  /* Aliases for compatibility with existing components */
+  --color-pink:      var(--color-orange);
+  --color-peach:     var(--color-yellow);
+  --color-lavender:  var(--color-blue);
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Poppins', 'Inter', system-ui, sans-serif;
+
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  /* Border radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.07);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.13);
+
+  /* Transitions */
+  --transition: 0.3s ease;
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+  --color-white:   #1a1015;
+  --color-light:   #23151a;
+  --color-charcoal:#f5eef0;
+  --color-gray:    #b090a0;
+  --color-orange:  #d34060;
+  --color-yellow:  #f3a0b0;
+  --color-blue:    #8060a0;
+  --color-pink:    var(--color-orange);
+  --color-peach:   var(--color-yellow);
+  --color-lavender:var(--color-blue);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+/* ── Reset & Base ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-charcoal);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  transition: background-color 0.4s, color 0.4s;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition), opacity var(--transition);
+}
+
+a:hover {
+  opacity: 0.75;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ── Glassmorphism Utility ───────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(30, 20, 40, 0.75);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* ── Reusable Button Styles ──────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), opacity var(--transition);
+  cursor: pointer;
+  border: none;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-orange), var(--color-yellow));
+  color: var(--color-charcoal);
+  box-shadow: 0 4px 20px rgba(255, 159, 67, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 107, 157, 0.4);
+  opacity: 1;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--color-charcoal);
+  color: var(--color-charcoal);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--color-charcoal);
+  color: var(--color-white);
+  transform: scale(1.04);
+  opacity: 1;
+}
+
+.btn-cart {
+  background: linear-gradient(135deg, var(--color-lavender), var(--color-pink));
+  color: var(--color-charcoal);
+  font-size: 0.82rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+/* ── Card Component ──────────────────────────────────────── */
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card:hover .btn-cart {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Product Card ─────────────────────────────────────────── */
+.product-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+.product-card:hover .btn-cart {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-img-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+}
+
+.product-img-wrap img {
+  border-radius: var(--radius-md);
+  max-height: 180px;
+  width: auto;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img-wrap img {
+  transform: scale(1.07);
+}
+
+/* ── Badge ───────────────────────────────────────────────── */
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-pink), var(--color-lavender));
+  color: var(--color-charcoal);
+  font-size: 0.65rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--color-white);
+  transition: transform var(--transition);
+}
+
+.badge.pulse {
+  animation: badgePulse 0.4s ease;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* ── Headings Typography ─────────────────────────────────── */
+.heading-serif {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-charcoal);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #FF6B9D, #FFB6C1, #E0BBE4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section Container ───────────────────────────────────── */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* ── Form Styles ─────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-charcoal);
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid rgba(180, 160, 200, 0.35);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.85);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+
+[data-theme="dark"] .form-input {
+  background: rgba(40,30,55,0.85);
+  color: var(--color-charcoal);
+  border-color: rgba(180,160,220,0.25);
+}
+
+.form-input::placeholder {
+  color: var(--color-gray);
+  opacity: 0.7;
+}
+
+.form-input:focus {
+  border-color: var(--color-pink);
+  box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.25);
+  background: var(--color-white);
+}
+
+[data-theme="dark"] .form-input:focus {
+  background: rgba(50,35,65,0.95);
+}
+
+.form-input.error {
+  border-color: #e05575;
+  box-shadow: 0 0 0 3px rgba(224, 85, 117, 0.18);
+}
+
+.form-error {
+  font-size: 0.78rem;
+  color: #e05575;
+  margin-top: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ── Tag / Chip ──────────────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-pink), var(--color-lavender));
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-sm);
+}
+
+/* ── Floating Shapes ─────────────────────────────────────── */
+.float-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0px);
+  animation: floatY 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-16px) rotate(8deg); }
+}
+
+/* ── Cart Notification Toast ─────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--color-charcoal);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  z-index: 9999;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ── Search Overlay ──────────────────────────────────────── */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.search-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-box {
+  width: 90%;
+  max-width: 600px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-20px);
+  transition: transform 0.35s ease;
+}
+
+.search-overlay.open .search-box {
+  transform: translateY(0);
+}
+
+/* ── Fade-in animations (for scroll reveal) ──────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Progress Bar ─────────────────────────────────────────── */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-pink), var(--color-lavender), var(--color-peach));
+  z-index: 9999;
+  transition: width 0.1s ease;
+}
+
+/* ── Back To Top ─────────────────────────────────────────── */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-pink), var(--color-lavender));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--transition), transform var(--transition);
+  pointer-events: none;
+  z-index: 100;
+  cursor: pointer;
+  border: none;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.back-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* ── Bento Grid ─────────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.bento-grid .col-span-2 { grid-column: span 2; }
+.bento-grid .col-span-1 { grid-column: span 1; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+/* Tablet breakpoint — 768px */
+@media (max-width: 768px) {
+  :root {
+    --space-xl: 2.5rem;
+    --space-lg: 1.75rem;
+  }
+
+  .section-container {
+    padding: 0 var(--space-sm);
+  }
+
+  h1 { font-size: 2.5rem !important; }
+  h2 { font-size: 1.8rem !important; }
+
+  /* Bento grid collapses to 2 columns on tablet */
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bento-grid .col-span-2 { grid-column: span 2; }
+  .bento-grid .col-span-1 { grid-column: span 1; }
+}
+
+/* Mobile breakpoint — 480px */
+@media (max-width: 480px) {
+  :root {
+    --space-xl: 1.75rem;
+    --space-lg: 1.25rem;
+  }
+
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+
+  /* Bento grid collapses to 1 column on mobile */
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-grid .col-span-2 { grid-column: span 1; }
+  .bento-grid .col-span-1 { grid-column: span 1; }
+
+  .btn { padding: 0.65rem 1.5rem; }
+}
